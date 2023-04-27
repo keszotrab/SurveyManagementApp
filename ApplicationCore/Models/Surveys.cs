@@ -1,4 +1,5 @@
-﻿using ApplicationCore.Repository;
+﻿using ApplicationCore.Models;
+using ApplicationCore.Repository;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,12 +15,17 @@ public class Surveys : IIdentity<int>
 {
     [Key]
     public int Id { get; set; }
-    public string Name { get; init; }
+    public string Name { get; set; }
+    public Users Author { get; set; } //od razu można przypisać autora
+    public string Type { get; set; }
 
-    [ForeignKey("User_id")]
-    public int Author_Id { get; init; }
+    public List<DomainCheck> Checks { get; set; } //domeny które mogą odpowiadać na tą ankiete
+    public List<Questions> Questions { get; set; } //lista wszystkich pytań tej ankiety
+    
+    //public virtual Questions Questions { get; set; }
+    //public virtual AlreadyAnswerd AlreadyAnswerd { get; set; }
 
-    public string Access { get; init; }
-
-    public virtual Users User { get; set; }
+    //Potrzebne?
+    //public virtual Users Users { get; set; }
+    //public virtual DomainCheck DomainCheck { get; set; }
 }

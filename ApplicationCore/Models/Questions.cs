@@ -9,16 +9,12 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Models
 {
-    internal class Questions
+    public class Questions
     {
         [Key]
         public int Id { get; set; }
-
-        [ForeignKey("Survey")]
-        public int Survey_Id { get; init; }
-
+        public Surveys Surveys { get; init; }
         public string Question { get; init; }
-
-        public virtual Surveys Survey { get; set; }
+        public List<Answers> Answers { get; init; }
     }
 }

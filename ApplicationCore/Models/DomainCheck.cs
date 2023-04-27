@@ -9,17 +9,14 @@ using BackendLab01;
 
 namespace ApplicationCore.Models
 {
-    internal class DomainCheck
+    public class DomainCheck
     {
         [Key]
         public int Id { get; set; }
 
-        [ForeignKey("Survey")]
-        public int Survey_Id { get; init; }
+        public Surveys Survey { get; init; } //Czy to jest potrzebne? Chyba? Potrafie sobie wyobrazić działanie bez tego?
 
         public string Domain_Name { get; init; }
-
-        public virtual Surveys Survey { get; set; }
 
     }
 }

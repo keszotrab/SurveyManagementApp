@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Models;
 
-public class Users : IIdentity<int>
+public class Users
 {
     public int Id { get; set; }
     public string Username { get; init; }

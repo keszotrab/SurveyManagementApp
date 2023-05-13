@@ -2,7 +2,7 @@
 
 namespace Infrastructure.EF;
 
-public class Users : IIdentity<int>
+public class Users : Identity<int>
 {
     [Key]
     public int Id { get; set; }

@@ -1,5 +1,4 @@
-﻿using ApplicationCore.Models;
-using ApplicationCore.Repository;
+﻿using ApplicationCore.Repository;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,19 +8,18 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BackendLab01;
+namespace ApplicationCore.Models;
 
-public class Surveys : IIdentity<int>
+public class Surveys
 {
-    [Key]
     public int Id { get; set; }
     public string Name { get; set; }
     public Users Author { get; set; } //od razu można przypisać autora
-    public string Type { get; set; }
+    public string Type { get; set; } //public, private, domain. Mozna tu walnąć enuma teorytycznie
 
     public List<DomainCheck> Checks { get; set; } //domeny które mogą odpowiadać na tą ankiete
     public List<Questions> Questions { get; set; } //lista wszystkich pytań tej ankiety
-    
+
     //public virtual Questions Questions { get; set; }
     //public virtual AlreadyAnswerd AlreadyAnswerd { get; set; }
 

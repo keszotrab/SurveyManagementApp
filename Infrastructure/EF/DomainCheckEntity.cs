@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace Infrastructure.EF
 {
@@ -6,7 +8,14 @@ namespace Infrastructure.EF
     {
         public int Id { get; set; }
 
-        public int SurveyId { get; init; }
+
+
+        public int SurveyId { get; set; }
+
+        [ForeignKey("SurveyId")]
+        public SurveysEntity Surveys { get; set; }
+
+
 
         public string Domain_Name { get; init; }
 

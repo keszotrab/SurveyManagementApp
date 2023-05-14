@@ -9,11 +9,10 @@ namespace Infrastructure.EF
 
 
 
-        [ForeignKey("Surveys")]
         public int SurveysId { get; init; }
-        public SurveysEntity Surveys { get; init; }
 
-
+        [ForeignKey("SurveysId")]
+        public SurveysEntity Surveys { get; set; }
 
 
         public string Question { get; init; }

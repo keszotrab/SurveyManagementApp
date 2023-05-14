@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
 namespace Infrastructure.EF;
@@ -19,6 +19,7 @@ public class UsersEntity : IdentityUser<int>{
 
  
     
+ 
 
 
 

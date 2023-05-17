@@ -7,14 +7,16 @@ namespace Infrastructure.EF
         public int Id { get; set; }
 
 
-        //[ForeignKey("Users")]
-        public int UserId { get; set; }
+        
+        //public int UserId { get; set; }
+        //[ForeignKey("UserId")]
         //public UsersEntity Users { get; set; }
 
 
+        
+        //public int AnswerId { get; set; }
         //[ForeignKey("Answers")]
-        public int AnswerId { get; set; }
-        //public AnswersEntity Answers { get; set; }
+        public AnswersEntity Answers { get; set; }
 
 
         public string AnswerText { get; set; }

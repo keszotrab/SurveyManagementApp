@@ -7,8 +7,6 @@ namespace Infrastructure.EF
     {
         public int Id { get; set; }
 
-
-
         public int SurveysId { get; init; }
 
         [ForeignKey("SurveysId")]

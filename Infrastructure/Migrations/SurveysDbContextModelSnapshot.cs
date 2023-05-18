@@ -4,19 +4,16 @@ using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
 namespace Infrastructure.Migrations
 {
-    [DbContext(typeof(QuizDbContext))]
-    [Migration("20230513224132_InitialCreate")]
-    partial class InitialCreate
+    [DbContext(typeof(SurveysDbContext))]
+    partial class SurveysDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,10 +33,14 @@ namespace Infrastructure.Migrations
                     b.Property<int>("AnswerId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UsersEntityId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AnswerId");
+
+                    b.HasIndex("UsersEntityId");
 
                     b.ToTable("AlreadyAnswerd");
                 });
@@ -85,10 +86,14 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UsersEntityId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AnswerId");
+
+                    b.HasIndex("UsersEntityId");
 
                     b.ToTable("ClosedUserAnswers");
                 });
@@ -123,21 +128,25 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AnswerId")
-                        .HasColumnType("int");
-
                     b.Property<string>("AnswerText")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("AnswersId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UsersEntityId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AnswersId");
+
+                    b.HasIndex("UsersEntityId");
 
                     b.ToTable("OpenUserAnswers");
                 });
@@ -391,6 +400,21 @@ namespace Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Infrastructure.EF.AlreadyAnswerdEntity", b =>
+                {
+                    b.HasOne("Infrastructure.EF.AnswersEntity", "Answer")
+                        .WithMany("AlreadyAnswerd")
+                        .HasForeignKey("AnswerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Infrastructure.EF.UsersEntity", null)
+                        .WithMany("AlreadyAnswerd")
+                        .HasForeignKey("UsersEntityId");
+
+                    b.Navigation("Answer");
+                });
+
             modelBuilder.Entity("Infrastructure.EF.AnswersEntity", b =>
                 {
                     b.HasOne("Infrastructure.EF.QuestionsEntity", "Question")
@@ -402,6 +426,21 @@ namespace Infrastructure.Migrations
                     b.Navigation("Question");
                 });
 
+            modelBuilder.Entity("Infrastructure.EF.ClosedUserAnswersEntity", b =>
+                {
+                    b.HasOne("Infrastructure.EF.AnswersEntity", "Answer")
+                        .WithMany("ClosedUserAnswers")
+                        .HasForeignKey("AnswerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Infrastructure.EF.UsersEntity", null)
+                        .WithMany("ClosedUserAnswers")
+                        .HasForeignKey("UsersEntityId");
+
+                    b.Navigation("Answer");
+                });
+
             modelBuilder.Entity("Infrastructure.EF.DomainCheckEntity", b =>
                 {
                     b.HasOne("Infrastructure.EF.SurveysEntity", "Surveys")
@@ -411,6 +450,21 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Surveys");
+                });
+
+            modelBuilder.Entity("Infrastructure.EF.OpenUserAnswersEntity", b =>
+                {
+                    b.HasOne("Infrastructure.EF.AnswersEntity", "Answers")
+                        .WithMany("OpenUserAnswers")
+                        .HasForeignKey("AnswersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Infrastructure.EF.UsersEntity", null)
+                        .WithMany("OpenUserAnswers")
+                        .HasForeignKey("UsersEntityId");
+
+                    b.Navigation("Answers");
                 });
 
             modelBuilder.Entity("Infrastructure.EF.QuestionsEntity", b =>
@@ -486,6 +540,15 @@ namespace Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Infrastructure.EF.AnswersEntity", b =>
+                {
+                    b.Navigation("AlreadyAnswerd");
+
+                    b.Navigation("ClosedUserAnswers");
+
+                    b.Navigation("OpenUserAnswers");
+                });
+
             modelBuilder.Entity("Infrastructure.EF.QuestionsEntity", b =>
                 {
                     b.Navigation("Answers");
@@ -500,6 +563,12 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Infrastructure.EF.UsersEntity", b =>
                 {
+                    b.Navigation("AlreadyAnswerd");
+
+                    b.Navigation("ClosedUserAnswers");
+
+                    b.Navigation("OpenUserAnswers");
+
                     b.Navigation("Surveys");
                 });
 #pragma warning restore 612, 618

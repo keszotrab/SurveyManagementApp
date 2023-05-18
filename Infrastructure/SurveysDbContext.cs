@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Infrastructure
 {
-    public class QuizDbContext : IdentityDbContext<UsersEntity, UserRoleEntity, int>
+    public class SurveysDbContext : IdentityDbContext<UsersEntity, UserRoleEntity, int>
     {
         public DbSet<AlreadyAnswerdEntity> AlreadyAnswerd { get; set; }
         public DbSet<ClosedUserAnswersEntity> ClosedUserAnswers { get; set; }
@@ -22,18 +22,17 @@ namespace Infrastructure
         public DbSet<QuestionsEntity> Questions { get; set; }
         public DbSet<SurveysEntity> Surveys { get; set; }
         public DbSet<UsersEntity> Users { get; set; }
-
         public DbSet<UserRoleEntity> UserRole { get; set; }
 
 
-        public QuizDbContext() 
+        public SurveysDbContext() 
         { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseSqlServer(
-                "DATA SOURCE=BARTEK-KOMPUTER\\SQLEXPRESS;DATABASE=SurveysDb5;Integrated Security=true;TrustServerCertificate=True");
+                "DATA SOURCE=BARTEK-KOMPUTER\\SQLEXPRESS;DATABASE=SurveysDb22;Integrated Security=true;TrustServerCertificate=True");
         }
 
 

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Infrastructure.EF
+namespace Infrastructure.EF.Entities
 {
     public class ClosedUserAnswersEntity
     {
@@ -10,7 +10,7 @@ namespace Infrastructure.EF
         //[ForeignKey("UserId")]
         //public UsersEntity User { get; set; }
 
-        
+
         public int AnswerId { get; set; }
         [ForeignKey("AnswerId")]
         public AnswersEntity Answer { get; set; }

@@ -2,15 +2,15 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore.Design;
 
-namespace Infrastructure.EF;
+namespace Infrastructure.EF.Entities;
 
 public class SurveysEntity
 {
     public int Id { get; set; }
     public string Name { get; set; }
     public string Type { get; set; } //public, private, domain. Mozna tu walnąć enuma teorytycznie
-    
-    
+
+
     public int AuthorId { get; set; }
 
     [ForeignKey("AuthorId")]

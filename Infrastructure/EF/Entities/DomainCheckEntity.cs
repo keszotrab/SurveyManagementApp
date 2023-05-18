@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
 
-namespace Infrastructure.EF
+namespace Infrastructure.EF.Entities
 {
     public class DomainCheckEntity
     {

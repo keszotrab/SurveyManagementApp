@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.EF
+namespace Infrastructure.EF.Entities
 {
     public class UserRoleEntity : IdentityRole<int>
     {

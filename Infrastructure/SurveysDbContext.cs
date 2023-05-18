@@ -1,5 +1,4 @@
-﻿using Infrastructure.EF;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Infrastructure.EF.Entities;
 
 namespace Infrastructure
 {

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(SurveysDbContext))]
-    [Migration("20230517212119_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230519031745_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Infrastructure.EF.AlreadyAnswerdEntity", b =>
+            modelBuilder.Entity("Infrastructure.EF.Entities.AlreadyAnswerdEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -36,19 +36,19 @@ namespace Infrastructure.Migrations
                     b.Property<int>("AnswerId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UsersEntityId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AnswerId");
 
-                    b.HasIndex("UsersEntityId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("AlreadyAnswerd");
                 });
 
-            modelBuilder.Entity("Infrastructure.EF.AnswersEntity", b =>
+            modelBuilder.Entity("Infrastructure.EF.Entities.AnswersEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -72,9 +72,46 @@ namespace Infrastructure.Migrations
                     b.HasIndex("QuestionId");
 
                     b.ToTable("Answers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Answer = "4",
+                            AnswerType = "Closed",
+                            QuestionId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Answer = "7",
+                            AnswerType = "Closed",
+                            QuestionId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Answer = "John Lenon",
+                            AnswerType = "Closed",
+                            QuestionId = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Answer = "Steve Jobs",
+                            AnswerType = "Closed",
+                            QuestionId = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Answer = "Jeve Stobs Jr.",
+                            AnswerType = "Closed",
+                            QuestionId = 2
+                        });
                 });
 
-            modelBuilder.Entity("Infrastructure.EF.ClosedUserAnswersEntity", b =>
+            modelBuilder.Entity("Infrastructure.EF.Entities.ClosedUserAnswersEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -89,19 +126,19 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UsersEntityId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AnswerId");
 
-                    b.HasIndex("UsersEntityId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("ClosedUserAnswers");
                 });
 
-            modelBuilder.Entity("Infrastructure.EF.DomainCheckEntity", b =>
+            modelBuilder.Entity("Infrastructure.EF.Entities.DomainCheckEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -123,13 +160,16 @@ namespace Infrastructure.Migrations
                     b.ToTable("DomainCheck");
                 });
 
-            modelBuilder.Entity("Infrastructure.EF.OpenUserAnswersEntity", b =>
+            modelBuilder.Entity("Infrastructure.EF.Entities.OpenUserAnswersEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AnswerId")
+                        .HasColumnType("int");
 
                     b.Property<string>("AnswerText")
                         .IsRequired()
@@ -142,19 +182,19 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UsersEntityId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AnswersId");
 
-                    b.HasIndex("UsersEntityId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("OpenUserAnswers");
                 });
 
-            modelBuilder.Entity("Infrastructure.EF.QuestionsEntity", b =>
+            modelBuilder.Entity("Infrastructure.EF.Entities.QuestionsEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -174,9 +214,23 @@ namespace Infrastructure.Migrations
                     b.HasIndex("SurveysId");
 
                     b.ToTable("Questions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Question = "Ile to 2+2?",
+                            SurveysId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Question = "Kto założył Apple?",
+                            SurveysId = 1
+                        });
                 });
 
-            modelBuilder.Entity("Infrastructure.EF.SurveysEntity", b =>
+            modelBuilder.Entity("Infrastructure.EF.Entities.SurveysEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -184,7 +238,7 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AuthorId")
+                    b.Property<int?>("AuthorId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -195,14 +249,28 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("UsersEntityId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
 
+                    b.HasIndex("UsersEntityId");
+
                     b.ToTable("Surveys");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AuthorId = 1,
+                            Name = "testSurvey",
+                            Type = "public"
+                        });
                 });
 
-            modelBuilder.Entity("Infrastructure.EF.UserRoleEntity", b =>
+            modelBuilder.Entity("Infrastructure.EF.Entities.UserRoleEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -232,7 +300,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("AspNetRoles", (string)null);
                 });
 
-            modelBuilder.Entity("Infrastructure.EF.UsersEntity", b =>
+            modelBuilder.Entity("Infrastructure.EF.Entities.UsersEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -277,6 +345,10 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Salt")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -298,6 +370,36 @@ namespace Infrastructure.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "f67d4417-9e69-4805-942e-1590a8afff03",
+                            Email = "admin@admin.adm",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PasswordHash = "590EE0CF87D500E47811C4FF2AB6F454C70080A89CCFB1771987BD2DB8DCB4BC",
+                            PhoneNumberConfirmed = false,
+                            Salt = "3KmnGpckunC7RrOt/lRQYg==",
+                            TwoFactorEnabled = false,
+                            UserName = "admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "421f6d39-3dcf-425d-8c1d-e19b2e878978",
+                            Email = "client@client.cli",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PasswordHash = "RK9wNvXKYruqOaVsZ38Uew==",
+                            PhoneNumberConfirmed = false,
+                            Salt = "06AA267858EA0A0E227984B83434FEE818F4CB622D13051FF07229279E281EB5",
+                            TwoFactorEnabled = false,
+                            UserName = "client"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -403,24 +505,27 @@ namespace Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Infrastructure.EF.AlreadyAnswerdEntity", b =>
+            modelBuilder.Entity("Infrastructure.EF.Entities.AlreadyAnswerdEntity", b =>
                 {
-                    b.HasOne("Infrastructure.EF.AnswersEntity", "Answer")
+                    b.HasOne("Infrastructure.EF.Entities.AnswersEntity", "Answer")
                         .WithMany("AlreadyAnswerd")
                         .HasForeignKey("AnswerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Infrastructure.EF.UsersEntity", null)
-                        .WithMany("AlreadyAnswerd")
-                        .HasForeignKey("UsersEntityId");
+                    b.HasOne("Infrastructure.EF.Entities.UsersEntity", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Answer");
+
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Infrastructure.EF.AnswersEntity", b =>
+            modelBuilder.Entity("Infrastructure.EF.Entities.AnswersEntity", b =>
                 {
-                    b.HasOne("Infrastructure.EF.QuestionsEntity", "Question")
+                    b.HasOne("Infrastructure.EF.Entities.QuestionsEntity", "Question")
                         .WithMany("Answers")
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -429,24 +534,27 @@ namespace Infrastructure.Migrations
                     b.Navigation("Question");
                 });
 
-            modelBuilder.Entity("Infrastructure.EF.ClosedUserAnswersEntity", b =>
+            modelBuilder.Entity("Infrastructure.EF.Entities.ClosedUserAnswersEntity", b =>
                 {
-                    b.HasOne("Infrastructure.EF.AnswersEntity", "Answer")
+                    b.HasOne("Infrastructure.EF.Entities.AnswersEntity", "Answer")
                         .WithMany("ClosedUserAnswers")
                         .HasForeignKey("AnswerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Infrastructure.EF.UsersEntity", null)
-                        .WithMany("ClosedUserAnswers")
-                        .HasForeignKey("UsersEntityId");
+                    b.HasOne("Infrastructure.EF.Entities.UsersEntity", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Answer");
+
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Infrastructure.EF.DomainCheckEntity", b =>
+            modelBuilder.Entity("Infrastructure.EF.Entities.DomainCheckEntity", b =>
                 {
-                    b.HasOne("Infrastructure.EF.SurveysEntity", "Surveys")
+                    b.HasOne("Infrastructure.EF.Entities.SurveysEntity", "Surveys")
                         .WithMany("Checks")
                         .HasForeignKey("SurveyId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -455,24 +563,27 @@ namespace Infrastructure.Migrations
                     b.Navigation("Surveys");
                 });
 
-            modelBuilder.Entity("Infrastructure.EF.OpenUserAnswersEntity", b =>
+            modelBuilder.Entity("Infrastructure.EF.Entities.OpenUserAnswersEntity", b =>
                 {
-                    b.HasOne("Infrastructure.EF.AnswersEntity", "Answers")
+                    b.HasOne("Infrastructure.EF.Entities.AnswersEntity", "Answers")
                         .WithMany("OpenUserAnswers")
                         .HasForeignKey("AnswersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Infrastructure.EF.UsersEntity", null)
-                        .WithMany("OpenUserAnswers")
-                        .HasForeignKey("UsersEntityId");
+                    b.HasOne("Infrastructure.EF.Entities.UsersEntity", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Answers");
+
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Infrastructure.EF.QuestionsEntity", b =>
+            modelBuilder.Entity("Infrastructure.EF.Entities.QuestionsEntity", b =>
                 {
-                    b.HasOne("Infrastructure.EF.SurveysEntity", "Surveys")
+                    b.HasOne("Infrastructure.EF.Entities.SurveysEntity", "Surveys")
                         .WithMany("Questions")
                         .HasForeignKey("SurveysId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -481,20 +592,23 @@ namespace Infrastructure.Migrations
                     b.Navigation("Surveys");
                 });
 
-            modelBuilder.Entity("Infrastructure.EF.SurveysEntity", b =>
+            modelBuilder.Entity("Infrastructure.EF.Entities.SurveysEntity", b =>
                 {
-                    b.HasOne("Infrastructure.EF.UsersEntity", "User")
-                        .WithMany("Surveys")
+                    b.HasOne("Infrastructure.EF.Entities.UsersEntity", "User")
+                        .WithMany()
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("Infrastructure.EF.Entities.UsersEntity", null)
+                        .WithMany("Surveys")
+                        .HasForeignKey("UsersEntityId");
 
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
-                    b.HasOne("Infrastructure.EF.UserRoleEntity", null)
+                    b.HasOne("Infrastructure.EF.Entities.UserRoleEntity", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -503,7 +617,7 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
-                    b.HasOne("Infrastructure.EF.UsersEntity", null)
+                    b.HasOne("Infrastructure.EF.Entities.UsersEntity", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -512,7 +626,7 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
-                    b.HasOne("Infrastructure.EF.UsersEntity", null)
+                    b.HasOne("Infrastructure.EF.Entities.UsersEntity", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -521,13 +635,13 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.HasOne("Infrastructure.EF.UserRoleEntity", null)
+                    b.HasOne("Infrastructure.EF.Entities.UserRoleEntity", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Infrastructure.EF.UsersEntity", null)
+                    b.HasOne("Infrastructure.EF.Entities.UsersEntity", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -536,14 +650,14 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.HasOne("Infrastructure.EF.UsersEntity", null)
+                    b.HasOne("Infrastructure.EF.Entities.UsersEntity", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Infrastructure.EF.AnswersEntity", b =>
+            modelBuilder.Entity("Infrastructure.EF.Entities.AnswersEntity", b =>
                 {
                     b.Navigation("AlreadyAnswerd");
 
@@ -552,26 +666,20 @@ namespace Infrastructure.Migrations
                     b.Navigation("OpenUserAnswers");
                 });
 
-            modelBuilder.Entity("Infrastructure.EF.QuestionsEntity", b =>
+            modelBuilder.Entity("Infrastructure.EF.Entities.QuestionsEntity", b =>
                 {
                     b.Navigation("Answers");
                 });
 
-            modelBuilder.Entity("Infrastructure.EF.SurveysEntity", b =>
+            modelBuilder.Entity("Infrastructure.EF.Entities.SurveysEntity", b =>
                 {
                     b.Navigation("Checks");
 
                     b.Navigation("Questions");
                 });
 
-            modelBuilder.Entity("Infrastructure.EF.UsersEntity", b =>
+            modelBuilder.Entity("Infrastructure.EF.Entities.UsersEntity", b =>
                 {
-                    b.Navigation("AlreadyAnswerd");
-
-                    b.Navigation("ClosedUserAnswers");
-
-                    b.Navigation("OpenUserAnswers");
-
                     b.Navigation("Surveys");
                 });
 #pragma warning restore 612, 618

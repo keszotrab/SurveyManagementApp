@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,6 +34,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Salt = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -166,7 +169,8 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AuthorId = table.Column<int>(type: "int", nullable: false)
+                    AuthorId = table.Column<int>(type: "int", nullable: true),
+                    UsersEntityId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -175,8 +179,12 @@ namespace Infrastructure.Migrations
                         name: "FK_Surveys_AspNetUsers_AuthorId",
                         column: x => x.AuthorId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Surveys_AspNetUsers_UsersEntityId",
+                        column: x => x.UsersEntityId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -246,8 +254,8 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AnswerId = table.Column<int>(type: "int", nullable: false),
-                    UsersEntityId = table.Column<int>(type: "int", nullable: true)
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    AnswerId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -259,8 +267,8 @@ namespace Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AlreadyAnswerd_AspNetUsers_UsersEntityId",
-                        column: x => x.UsersEntityId,
+                        name: "FK_AlreadyAnswerd_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                 });
@@ -271,9 +279,9 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: true),
                     AnswerId = table.Column<int>(type: "int", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UsersEntityId = table.Column<int>(type: "int", nullable: true)
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -285,8 +293,8 @@ namespace Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ClosedUserAnswers_AspNetUsers_UsersEntityId",
-                        column: x => x.UsersEntityId,
+                        name: "FK_ClosedUserAnswers_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                 });
@@ -297,10 +305,11 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    AnswerId = table.Column<int>(type: "int", nullable: false),
                     AnswersId = table.Column<int>(type: "int", nullable: false),
                     AnswerText = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UsersEntityId = table.Column<int>(type: "int", nullable: true)
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -312,10 +321,45 @@ namespace Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OpenUserAnswers_AspNetUsers_UsersEntityId",
-                        column: x => x.UsersEntityId,
+                        name: "FK_OpenUserAnswers_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Salt", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { 1, 0, "f67d4417-9e69-4805-942e-1590a8afff03", "admin@admin.adm", false, false, null, null, null, "590EE0CF87D500E47811C4FF2AB6F454C70080A89CCFB1771987BD2DB8DCB4BC", null, false, "3KmnGpckunC7RrOt/lRQYg==", null, false, "admin" },
+                    { 2, 0, "421f6d39-3dcf-425d-8c1d-e19b2e878978", "client@client.cli", false, false, null, null, null, "RK9wNvXKYruqOaVsZ38Uew==", null, false, "06AA267858EA0A0E227984B83434FEE818F4CB622D13051FF07229279E281EB5", null, false, "client" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Surveys",
+                columns: new[] { "Id", "AuthorId", "Name", "Type", "UsersEntityId" },
+                values: new object[] { 1, 1, "testSurvey", "public", null });
+
+            migrationBuilder.InsertData(
+                table: "Questions",
+                columns: new[] { "Id", "Question", "SurveysId" },
+                values: new object[,]
+                {
+                    { 1, "Ile to 2+2?", 1 },
+                    { 2, "Kto założył Apple?", 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Answers",
+                columns: new[] { "Id", "Answer", "AnswerType", "QuestionId" },
+                values: new object[,]
+                {
+                    { 1, "4", "Closed", 1 },
+                    { 2, "7", "Closed", 1 },
+                    { 3, "John Lenon", "Closed", 2 },
+                    { 4, "Steve Jobs", "Closed", 2 },
+                    { 5, "Jeve Stobs Jr.", "Closed", 2 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -324,9 +368,9 @@ namespace Infrastructure.Migrations
                 column: "AnswerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AlreadyAnswerd_UsersEntityId",
+                name: "IX_AlreadyAnswerd_UserId",
                 table: "AlreadyAnswerd",
-                column: "UsersEntityId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Answers_QuestionId",
@@ -378,9 +422,9 @@ namespace Infrastructure.Migrations
                 column: "AnswerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ClosedUserAnswers_UsersEntityId",
+                name: "IX_ClosedUserAnswers_UserId",
                 table: "ClosedUserAnswers",
-                column: "UsersEntityId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DomainCheck_SurveyId",
@@ -393,9 +437,9 @@ namespace Infrastructure.Migrations
                 column: "AnswersId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OpenUserAnswers_UsersEntityId",
+                name: "IX_OpenUserAnswers_UserId",
                 table: "OpenUserAnswers",
-                column: "UsersEntityId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Questions_SurveysId",
@@ -406,6 +450,11 @@ namespace Infrastructure.Migrations
                 name: "IX_Surveys_AuthorId",
                 table: "Surveys",
                 column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Surveys_UsersEntityId",
+                table: "Surveys",
+                column: "UsersEntityId");
         }
 
         /// <inheritdoc />

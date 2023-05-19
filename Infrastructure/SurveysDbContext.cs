@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Infrastructure.EF.Entities;
+using Infrastructure.Utility;
 
 namespace Infrastructure
 {
@@ -32,7 +33,7 @@ namespace Infrastructure
         {
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseSqlServer(
-                "DATA SOURCE=BARTEK-KOMPUTER\\SQLEXPRESS;DATABASE=SurveysDb22;Integrated Security=true;TrustServerCertificate=True");
+                "DATA SOURCE=BARTEK-KOMPUTER\\SQLEXPRESS;DATABASE=SurveysDb28;Integrated Security=true;TrustServerCertificate=True");
         }
 
 
@@ -40,49 +41,104 @@ namespace Infrastructure
         {
             base.OnModelCreating(modelBuilder);
 
-            //modelBuilder.Entity<QuizItemUserAnswerEntity>()
-            //    .HasOne(e => e.QuizItem);
 
-            /*
-            modelBuilder.Entity<UsersEntity>()
-                .HasData(
-                    new UsersEntity() { Id = 1, Username="admin", Password="admin", Role= "admin", Email="admin@admin.adm"},
-                    new UsersEntity() { Id = 2, Username = "client", Password = "client", Role = "client", Email = "client@client.cli" }
-                );
-            */
+            modelBuilder.Entity<ClosedUserAnswersEntity>()
+            .HasOne(s => s.User)
+            .WithMany()
+            .HasForeignKey(e => e.UserId)
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.NoAction);
+            
 
+            modelBuilder.Entity<OpenUserAnswersEntity>()
+            .HasOne(s => s.User)
+            .WithMany()
+            .HasForeignKey(e => e.UserId)
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<AlreadyAnswerdEntity>()
+            .HasOne(s => s.User)
+            .WithMany()
+            .HasForeignKey(e => e.UserId)
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.NoAction);
 
-
-            /*
-             * 
-             * 
             modelBuilder.Entity<SurveysEntity>()
-                .HasData(
-                    new SurveysEntity()
-                    {
-                        Id = 1,
-                        Name = "testSurvey",
-                        AuthorId = 1,
-                        Type = "public"
-                    }
+            .HasOne(s => s.User)
+            .WithMany()
+            .HasForeignKey(e => e.AuthorId)
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.NoAction);
+
+
+
+
+
+            /////              /////
+            //   Add data below  //
+            /////             /////
+            
+            modelBuilder.Entity<UsersEntity>()
+            .HasData(
+                new UsersEntity() { 
+                    Id = 1, 
+                    UserName = "admin", 
+                    Email="admin@admin.adm", 
+                    PasswordHash = "590EE0CF87D500E47811C4FF2AB6F454C70080A89CCFB1771987BD2DB8DCB4BC", 
+                    Salt="3KmnGpckunC7RrOt/lRQYg==",
+                    EmailConfirmed=false,
+                    PhoneNumberConfirmed=false,
+                    TwoFactorEnabled=false,
+                    LockoutEnabled=false,
+                    AccessFailedCount=0
+                },
+                new UsersEntity()
+                {
+                    Id = 2,
+                    UserName = "client",
+                    Email = "client@client.cli",
+                    PasswordHash = "RK9wNvXKYruqOaVsZ38Uew==",
+                    Salt = "06AA267858EA0A0E227984B83434FEE818F4CB622D13051FF07229279E281EB5",
+                    EmailConfirmed = false,
+                    PhoneNumberConfirmed = false,
+                    TwoFactorEnabled = false,
+                    LockoutEnabled = false,
+                    AccessFailedCount = 0
+                }
                 );
+            
+            modelBuilder.Entity<SurveysEntity>()
+            .HasData(
+                new SurveysEntity()
+                {
+                    Id = 1,
+                    Name = "testSurvey",
+                    AuthorId = 1,
+                    Type = "public"
+                }
+            );
+
+
+
 
             modelBuilder.Entity<QuestionsEntity>()
-                .HasData(
-                    new QuestionsEntity()
-                    {
-                        Id = 1,
-                        SurveysId = 1,
-                        Question = "Ile to 2+2?"
-                    },
-                    new QuestionsEntity()
-                    {
-                        Id = 2,
-                        SurveysId = 1,
-                        Question = "Kto założył Apple?"
-                    }
-                );
+            .HasData(
+                new QuestionsEntity()
+                {
+                    Id = 1,
+                    SurveysId = 1,
+                    Question = "Ile to 2+2?"
+                },
+                new QuestionsEntity()
+                {
+                    Id = 2,
+                    SurveysId = 1,
+                    Question = "Kto założył Apple?"
+                }
+            );
+
+
 
             modelBuilder.Entity<AnswersEntity>()
                .HasData(
@@ -113,45 +169,56 @@ namespace Infrastructure
                        QuestionId = 2,
                        Answer = "Steve Jobs",
                        AnswerType = "Closed",
+                   },
+                   new AnswersEntity()
+                   {
+                       Id = 5,
+                       QuestionId = 2,
+                       Answer = "Jeve Stobs Jr.",
+                       AnswerType = "Closed",
                    }
-               );
 
-            modelBuilder.Entity<AnswersEntity>()
-               .HasData(
-                   new AnswersEntity()
-                   {
-                       Id = 1,
-                       QuestionId = 1,
-                       Answer = "4",
-                       AnswerType = "Closed",
-                   },
-                   new AnswersEntity()
-                   {
-                       Id = 2,
-                       QuestionId = 1,
-                       Answer = "7",
-                       AnswerType = "Closed"
-                   },
-                   new AnswersEntity()
-                   {
-                       Id = 3,
-                       QuestionId = 2,
-                       Answer = "John Lenon",
-                       AnswerType = "Closed",
-                   },
-                   new AnswersEntity()
-                   {
-                       Id = 4,
-                       QuestionId = 2,
-                       Answer = "Steve Jobs",
-                       AnswerType = "Closed",
-                   }
                );
 
 
+        /*
+         * 
+         * 
+
+        modelBuilder.Entity<AnswersEntity>()
+           .HasData(
+               new AnswersEntity()
+               {
+                   Id = 1,
+                   QuestionId = 1,
+                   Answer = "4",
+                   AnswerType = "Closed",
+               },
+               new AnswersEntity()
+               {
+                   Id = 2,
+                   QuestionId = 1,
+                   Answer = "7",
+                   AnswerType = "Closed"
+               },
+               new AnswersEntity()
+               {
+                   Id = 3,
+                   QuestionId = 2,
+                   Answer = "John Lenon",
+                   AnswerType = "Closed",
+               },
+               new AnswersEntity()
+               {
+                   Id = 4,
+                   QuestionId = 2,
+                   Answer = "Steve Jobs",
+                   AnswerType = "Closed",
+               }
+           );
 
 
-            */
+        */
 
 
 
@@ -164,41 +231,6 @@ namespace Infrastructure
 
 
 
-            /*
-            modelBuilder.Entity<SurveysEntity>()
-                .HasMany<QuestionsEntity>(q => q.Questions)
-                .WithMany(e => e.Quizzes)
-                .UsingEntity(
-                    join => join.HasData(
-                        new { QuizzesId = 1, ItemsId = 1 },
-                        new { QuizzesId = 1, ItemsId = 2 },
-                        new { QuizzesId = 1, ItemsId = 3 }
-                    )
-                );
-
-            modelBuilder.Entity<QuizItemEntity>()
-                .HasMany<QuizItemAnswerEntity>(q => q.IncorrectAnswers)
-                .WithMany(e => e.QuizItems)
-                .UsingEntity(join => join.HasData(
-                        // "2 + 3"
-                        new { QuizItemsId = 1, IncorrectAnswersId = 1 },
-                        new { QuizItemsId = 1, IncorrectAnswersId = 2 },
-                        new { QuizItemsId = 1, IncorrectAnswersId = 3 },
-                        // "2 * 3"
-                        new { QuizItemsId = 2, IncorrectAnswersId = 3 },
-                        new { QuizItemsId = 2, IncorrectAnswersId = 4 },
-                        new { QuizItemsId = 2, IncorrectAnswersId = 7 },
-                        // "8 - 3"
-                        new { QuizItemsId = 3, IncorrectAnswersId = 1 },
-                        new { QuizItemsId = 3, IncorrectAnswersId = 3 },
-                        new { QuizItemsId = 3, IncorrectAnswersId = 9 },
-                        // "8 : 2"
-                        new { QuizItemsId = 4, IncorrectAnswersId = 2 },
-                        new { QuizItemsId = 4, IncorrectAnswersId = 6 },
-                        new { QuizItemsId = 4, IncorrectAnswersId = 8 }
-                    )
-                );
-            */
         }
     }
 
@@ -241,16 +273,7 @@ namespace Infrastructure
         {
             base.OnModelCreating(modelBuilder);
 
-
-
-
-
-
-
         }
-
-
-
 
     }
     */

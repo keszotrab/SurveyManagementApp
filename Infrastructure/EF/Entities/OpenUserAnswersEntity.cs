@@ -8,14 +8,14 @@ namespace Infrastructure.EF.Entities
 
 
 
-        //public int UserId { get; set; }
-        //[ForeignKey("UserId")]
-        //public UsersEntity Users { get; set; }
+        public int? UserId { get; set; }
+        [ForeignKey("UserId")]
+        public UsersEntity User { get; set; }
 
 
 
-        //public int AnswerId { get; set; }
-        //[ForeignKey("Answers")]
+        public int AnswerId { get; set; }
+        [ForeignKey("AnswersId")]
         public AnswersEntity Answers { get; set; }
 
 

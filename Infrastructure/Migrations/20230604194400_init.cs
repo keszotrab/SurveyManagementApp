@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -328,12 +328,21 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { 1, null, "Normal", null },
+                    { 2, null, "Admin", null }
+                });
+
+            migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Salt", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { 1, 0, "f67d4417-9e69-4805-942e-1590a8afff03", "admin@admin.adm", false, false, null, null, null, "590EE0CF87D500E47811C4FF2AB6F454C70080A89CCFB1771987BD2DB8DCB4BC", null, false, "3KmnGpckunC7RrOt/lRQYg==", null, false, "admin" },
-                    { 2, 0, "421f6d39-3dcf-425d-8c1d-e19b2e878978", "client@client.cli", false, false, null, null, null, "RK9wNvXKYruqOaVsZ38Uew==", null, false, "06AA267858EA0A0E227984B83434FEE818F4CB622D13051FF07229279E281EB5", null, false, "client" }
+                    { 1, 0, "e3fe8ae7-d286-4a8a-a36f-f86b945d2d81", "admin@admin.adm", false, false, null, null, null, "590EE0CF87D500E47811C4FF2AB6F454C70080A89CCFB1771987BD2DB8DCB4BC", null, false, "3KmnGpckunC7RrOt/lRQYg==", null, false, "admin" },
+                    { 2, 0, "fe652e03-f58f-4db3-9fbc-b4bdc90b9304", "client@client.cli", false, false, null, null, null, "RK9wNvXKYruqOaVsZ38Uew==", null, false, "06AA267858EA0A0E227984B83434FEE818F4CB622D13051FF07229279E281EB5", null, false, "client" }
                 });
 
             migrationBuilder.InsertData(

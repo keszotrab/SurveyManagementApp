@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(SurveysDbContext))]
-    [Migration("20230519031745_Initial")]
-    partial class Initial
+    [Migration("20230604194400_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -298,6 +298,18 @@ namespace Infrastructure.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Normal"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("Infrastructure.EF.Entities.UsersEntity", b =>
@@ -376,7 +388,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f67d4417-9e69-4805-942e-1590a8afff03",
+                            ConcurrencyStamp = "e3fe8ae7-d286-4a8a-a36f-f86b945d2d81",
                             Email = "admin@admin.adm",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -390,7 +402,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "421f6d39-3dcf-425d-8c1d-e19b2e878978",
+                            ConcurrencyStamp = "fe652e03-f58f-4db3-9fbc-b4bdc90b9304",
                             Email = "client@client.cli",
                             EmailConfirmed = false,
                             LockoutEnabled = false,

@@ -33,13 +33,24 @@ namespace Infrastructure
         {
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseSqlServer(
-                "DATA SOURCE=BARTEK-KOMPUTER\\SQLEXPRESS;DATABASE=SurveysDb28;Integrated Security=true;TrustServerCertificate=True");
+                "DATA SOURCE=MAREK\\SQLEXPRESS;DATABASE=SurveysDb;Integrated Security=true;TrustServerCertificate=True");
         }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<UserRoleEntity>().HasData(new UserRoleEntity
+            {
+                Id = 1,
+                Name = "Normal"
+            });
+            modelBuilder.Entity<UserRoleEntity>().HasData(new UserRoleEntity
+            {
+                Id = 2,
+                Name = "Admin"
+            });
 
 
             modelBuilder.Entity<ClosedUserAnswersEntity>()

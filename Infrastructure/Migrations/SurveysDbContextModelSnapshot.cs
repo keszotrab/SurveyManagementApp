@@ -300,12 +300,14 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Normal"
+                            Name = "User",
+                            NormalizedName = "USER"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Admin"
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
                         });
                 });
 
@@ -385,7 +387,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e3fe8ae7-d286-4a8a-a36f-f86b945d2d81",
+                            ConcurrencyStamp = "022396ac-e43e-412d-9d86-e2f363977e23",
                             Email = "admin@admin.adm",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -399,7 +401,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fe652e03-f58f-4db3-9fbc-b4bdc90b9304",
+                            ConcurrencyStamp = "e9ad78a7-d37c-4f9d-b25b-c96c272ca2ba",
                             Email = "client@client.cli",
                             EmailConfirmed = false,
                             LockoutEnabled = false,

@@ -44,14 +44,23 @@ namespace Infrastructure
             modelBuilder.Entity<UserRoleEntity>().HasData(new UserRoleEntity
             {
                 Id = 1,
-                Name = "Normal"
-            });
+                Name = "User",
+                NormalizedName = "USER".ToUpper()
+
+            }) ;
             modelBuilder.Entity<UserRoleEntity>().HasData(new UserRoleEntity
             {
                 Id = 2,
-                Name = "Admin"
+                Name = "Admin",
+                NormalizedName="ADMIN".ToUpper()
             });
 
+            modelBuilder.Entity<UsersEntity>().HasData(new UsersEntity
+            {
+                Id=3,
+                UserName="admin"
+
+            });
 
             modelBuilder.Entity<ClosedUserAnswersEntity>()
             .HasOne(s => s.User)
@@ -94,7 +103,7 @@ namespace Infrastructure
             .HasData(
                 new UsersEntity() { 
                     Id = 1, 
-                    UserName = "admin", 
+                    UserName = "admin",
                     Email="admin@admin.adm", 
                     PasswordHash = "590EE0CF87D500E47811C4FF2AB6F454C70080A89CCFB1771987BD2DB8DCB4BC", 
                     Salt="3KmnGpckunC7RrOt/lRQYg==",

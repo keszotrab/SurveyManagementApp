@@ -1,6 +1,4 @@
-﻿using ApplicationCore.Roles;
-using AutoMapper;
-using Infrastructure.Dto;
+﻿using Infrastructure.Dto;
 using Infrastructure.EF.Entities;
 using Infrastructure.Mappers;
 using JWT.Algorithms;
@@ -59,7 +57,7 @@ namespace WebAPI.Controllers
                 return BadRequest(result.Errors);
             }
 
-            await _manager.AddToRoleAsync(user, Roles.User);
+            await _manager.AddToRoleAsync(user, "User");
 
             return Ok();
         }

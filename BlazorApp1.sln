@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SurveyTest", "SurveyTest\SurveyTest.csproj", "{00BDDE66-D487-45DF-AB6F-C7ADFE09D346}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsoleApp", "TestConsoleApp\TestConsoleApp.csproj", "{89409E33-DDEF-481E-9B13-1946DC4B3941}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestConsoleApp", "TestConsoleApp\TestConsoleApp.csproj", "{89409E33-DDEF-481E-9B13-1946DC4B3941}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

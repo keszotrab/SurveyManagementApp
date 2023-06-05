@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -341,9 +341,14 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Salt", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { 1, 0, "022396ac-e43e-412d-9d86-e2f363977e23", "admin@admin.adm", false, false, null, null, null, "590EE0CF87D500E47811C4FF2AB6F454C70080A89CCFB1771987BD2DB8DCB4BC", null, false, "3KmnGpckunC7RrOt/lRQYg==", null, false, "admin" },
-                    { 2, 0, "e9ad78a7-d37c-4f9d-b25b-c96c272ca2ba", "client@client.cli", false, false, null, null, null, "RK9wNvXKYruqOaVsZ38Uew==", null, false, "06AA267858EA0A0E227984B83434FEE818F4CB622D13051FF07229279E281EB5", null, false, "client" }
+                    { 1, 0, "00d50459-b809-4f8f-a079-61c656aed621", "admin@admin.adm", false, false, null, null, null, "Admin123@", null, false, "3KmnGpckunC7RrOt/lRQYg==", null, false, "admin" },
+                    { 2, 0, "bfa54642-a061-4d4d-bfdc-85190918636b", "client@client.cli", false, false, null, null, null, "RK9wNvXKYruqOaVsZ38Uew==", null, false, "06AA267858EA0A0E227984B83434FEE818F4CB622D13051FF07229279E281EB5", null, false, "client" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { 2, 1 });
 
             migrationBuilder.InsertData(
                 table: "Surveys",

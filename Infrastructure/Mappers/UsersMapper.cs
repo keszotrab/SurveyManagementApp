@@ -1,4 +1,5 @@
 ﻿using Azure.Identity;
+using Infrastructure;
 using Infrastructure.Dto;
 using Infrastructure.EF.Entities;
 using System;
@@ -7,7 +8,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 
 namespace Infrastructure.Mappers
 {

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(SurveysDbContext))]
-    [Migration("20230605155109_init")]
-    partial class init
+    [Migration("20230605215041_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -390,11 +390,11 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "022396ac-e43e-412d-9d86-e2f363977e23",
+                            ConcurrencyStamp = "00d50459-b809-4f8f-a079-61c656aed621",
                             Email = "admin@admin.adm",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "590EE0CF87D500E47811C4FF2AB6F454C70080A89CCFB1771987BD2DB8DCB4BC",
+                            PasswordHash = "Admin123@",
                             PhoneNumberConfirmed = false,
                             Salt = "3KmnGpckunC7RrOt/lRQYg==",
                             TwoFactorEnabled = false,
@@ -404,7 +404,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e9ad78a7-d37c-4f9d-b25b-c96c272ca2ba",
+                            ConcurrencyStamp = "bfa54642-a061-4d4d-bfdc-85190918636b",
                             Email = "client@client.cli",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -498,6 +498,13 @@ namespace Infrastructure.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 2
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>

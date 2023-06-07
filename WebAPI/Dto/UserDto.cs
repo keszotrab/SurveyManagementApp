@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Dto
+namespace WebAPI.Dto
 {
     public class UserDto
     {

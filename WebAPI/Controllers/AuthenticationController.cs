@@ -1,5 +1,4 @@
-﻿using Infrastructure.Dto;
-using Infrastructure.EF.Entities;
+﻿using Infrastructure.EF.Entities;
 using Infrastructure.Mappers;
 using JWT.Algorithms;
 using JWT.Builder;
@@ -10,6 +9,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using System.Threading.Tasks;
 using WebAPI.Configuration;
+using WebAPI.Dto;
+using WebAPI;
 
 namespace WebAPI.Controllers
 {
@@ -20,11 +21,15 @@ namespace WebAPI.Controllers
         private readonly UserManager<UsersEntity> _manager;
         private readonly JwtSettings _jwtSettings;
 
+
+
         public AuthenticationController(UserManager<UsersEntity> manager, JwtSettings jwtSettings)
         {
             _manager = manager;
             _jwtSettings = jwtSettings;
         }
+
+
 
         [HttpPost("login")]
         [AllowAnonymous]
@@ -45,11 +50,14 @@ namespace WebAPI.Controllers
             return Ok(new { Token = token });
         }
 
-        [HttpPost("register")]
+
+
+        [HttpPost("register/user")]
         [AllowAnonymous]
         public async Task<IActionResult> Register(UserRegisterDto userDto)
         {
-            var user = UsersMapper.FromDtoToUserEntity(userDto);
+            
+            var user = Mappers.UsersMapper.FromDtoToUserEntity(userDto);
 
             var result = await _manager.CreateAsync(user, userDto.Password);
             if (!result.Succeeded)
@@ -61,6 +69,8 @@ namespace WebAPI.Controllers
 
             return Ok();
         }
+
+
 
         private string CreateToken(UsersEntity user)
         {
@@ -77,5 +87,30 @@ namespace WebAPI.Controllers
                 .Issuer(_jwtSettings.Issuer)
                 .Encode();
         }
+
+
+
+        [HttpPost("register/admin")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> RegisterAdmin(UserRegisterDto userDto)
+        {
+            var user = Mappers.UsersMapper.FromDtoToUserEntity(userDto);
+
+            var result = await _manager.CreateAsync(user, userDto.Password);
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
+
+            await _manager.AddToRoleAsync(user, "Admin");
+
+            return Ok();
+        }
+
+
+
+
+
+
     }
 }

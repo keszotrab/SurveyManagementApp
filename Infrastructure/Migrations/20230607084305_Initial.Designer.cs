@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(SurveysDbContext))]
-    [Migration("20230605155109_init")]
-    partial class init
+    [Migration("20230607084305_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -238,7 +238,7 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AuthorId")
+                    b.Property<int>("AuthorId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -390,11 +390,11 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "022396ac-e43e-412d-9d86-e2f363977e23",
+                            ConcurrencyStamp = "74086215-a773-4465-a707-5280cf10da66",
                             Email = "admin@admin.adm",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "590EE0CF87D500E47811C4FF2AB6F454C70080A89CCFB1771987BD2DB8DCB4BC",
+                            PasswordHash = "Admin123@",
                             PhoneNumberConfirmed = false,
                             Salt = "3KmnGpckunC7RrOt/lRQYg==",
                             TwoFactorEnabled = false,
@@ -404,7 +404,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e9ad78a7-d37c-4f9d-b25b-c96c272ca2ba",
+                            ConcurrencyStamp = "9eb30ecf-e4cc-4d05-80b4-bd39940f3641",
                             Email = "client@client.cli",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -498,6 +498,13 @@ namespace Infrastructure.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 2
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>

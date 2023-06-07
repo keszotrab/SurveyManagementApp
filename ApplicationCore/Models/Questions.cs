@@ -11,8 +11,16 @@ namespace ApplicationCore.Models
     public class Questions
     {
         public int Id { get; set; }
-        public Surveys Surveys { get; init; }
+        public int SurveysId { get; init; }
         public string Question { get; init; }
         public List<Answers> Answers { get; init; }
+
+        public Questions(int id, int surveysId, string question, List<Answers> answers)
+        {
+            Id = id;
+            SurveysId = surveysId;
+            Question = question;
+            Answers = answers;
+        }
     }
 }

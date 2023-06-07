@@ -11,7 +11,7 @@ public class SurveysEntity
     public string Type { get; set; } //public, private, domain. Mozna tu walnąć enuma teorytycznie
 
 
-    public int? AuthorId { get; set; }
+    public int AuthorId { get; set; }
 
     [ForeignKey("AuthorId")]
     public UsersEntity User { get; set; }

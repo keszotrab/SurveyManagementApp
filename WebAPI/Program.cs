@@ -1,5 +1,9 @@
+using ApplicationCore.Interfaces;
 using Infrastructure;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using WebAPI.Configuration;
 
@@ -10,8 +14,37 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddDbContext<SurveysDbContext>();
+//builder.Services.AddDbContext<SurveysDbContext>();
+//builder.Services.AddTransient<IUserSurveyService, UserSurveyService>();
+
+
+
+
+
+
+
+void ConfigureServices(IServiceCollection services) => services.AddDbContext<SurveysDbContext>(
+        options => options.UseSqlServer(
+            "<connection string>",
+            providerOptions => providerOptions.EnableRetryOnFailure()));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

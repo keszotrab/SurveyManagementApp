@@ -12,9 +12,15 @@ namespace ApplicationCore.Models
     {
         public int Id { get; set; }
 
-        public Surveys Survey { get; init; } 
+        public int SurveyId { get; init; } 
 
         public string Domain_Name { get; init; }
 
+        public DomainCheck(int id, int surveyId, string domain_Name)
+        {
+            Id = id;
+            SurveyId = surveyId;
+            Domain_Name = domain_Name;
+        }
     }
 }

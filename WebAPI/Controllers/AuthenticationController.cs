@@ -1,5 +1,4 @@
-﻿using Infrastructure.Dto;
-using Infrastructure.EF.Entities;
+﻿using Infrastructure.EF.Entities;
 using Infrastructure.Mappers;
 using JWT.Algorithms;
 using JWT.Builder;
@@ -58,7 +57,7 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> Register(UserRegisterDto userDto)
         {
             
-            var user = UsersMapper.FromDtoToUserEntity(userDto);
+            var user = Mappers.UsersMapper.FromDtoToUserEntity(userDto);
 
             var result = await _manager.CreateAsync(user, userDto.Password);
             if (!result.Succeeded)
@@ -95,7 +94,7 @@ namespace WebAPI.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> RegisterAdmin(UserRegisterDto userDto)
         {
-            var user = UsersMapper.FromDtoToUserEntity(userDto);
+            var user = Mappers.UsersMapper.FromDtoToUserEntity(userDto);
 
             var result = await _manager.CreateAsync(user, userDto.Password);
             if (!result.Succeeded)

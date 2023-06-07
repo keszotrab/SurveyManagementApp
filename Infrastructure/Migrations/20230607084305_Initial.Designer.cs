@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(SurveysDbContext))]
-    [Migration("20230605215041_Initial")]
+    [Migration("20230607084305_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -238,7 +238,7 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AuthorId")
+                    b.Property<int>("AuthorId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -390,7 +390,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "00d50459-b809-4f8f-a079-61c656aed621",
+                            ConcurrencyStamp = "74086215-a773-4465-a707-5280cf10da66",
                             Email = "admin@admin.adm",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -404,7 +404,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "bfa54642-a061-4d4d-bfdc-85190918636b",
+                            ConcurrencyStamp = "9eb30ecf-e4cc-4d05-80b4-bd39940f3641",
                             Email = "client@client.cli",
                             EmailConfirmed = false,
                             LockoutEnabled = false,

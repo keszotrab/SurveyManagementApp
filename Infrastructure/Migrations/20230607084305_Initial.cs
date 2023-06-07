@@ -169,7 +169,7 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AuthorId = table.Column<int>(type: "int", nullable: true),
+                    AuthorId = table.Column<int>(type: "int", nullable: false),
                     UsersEntityId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -341,8 +341,8 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Salt", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { 1, 0, "00d50459-b809-4f8f-a079-61c656aed621", "admin@admin.adm", false, false, null, null, null, "Admin123@", null, false, "3KmnGpckunC7RrOt/lRQYg==", null, false, "admin" },
-                    { 2, 0, "bfa54642-a061-4d4d-bfdc-85190918636b", "client@client.cli", false, false, null, null, null, "RK9wNvXKYruqOaVsZ38Uew==", null, false, "06AA267858EA0A0E227984B83434FEE818F4CB622D13051FF07229279E281EB5", null, false, "client" }
+                    { 1, 0, "74086215-a773-4465-a707-5280cf10da66", "admin@admin.adm", false, false, null, null, null, "Admin123@", null, false, "3KmnGpckunC7RrOt/lRQYg==", null, false, "admin" },
+                    { 2, 0, "9eb30ecf-e4cc-4d05-80b4-bd39940f3641", "client@client.cli", false, false, null, null, null, "RK9wNvXKYruqOaVsZ38Uew==", null, false, "06AA267858EA0A0E227984B83434FEE818F4CB622D13051FF07229279E281EB5", null, false, "client" }
                 });
 
             migrationBuilder.InsertData(

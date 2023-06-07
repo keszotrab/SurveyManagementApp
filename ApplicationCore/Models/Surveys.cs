@@ -20,6 +20,22 @@ public class Surveys
     public List<DomainCheck> Checks { get; set; } //domeny które mogą odpowiadać na tą ankiete
     public List<Questions> Questions { get; set; } //lista wszystkich pytań tej ankiety
 
+    public Surveys(int id, string name, Users author, string type, List<DomainCheck> checks, List<Questions> questions)
+    {
+        Id = id;
+        Name = name;
+        Author = author;
+        Type = type;
+        Checks = checks;
+        Questions = questions;
+    }
+
+
+
+
+
+
+
     //public virtual Questions Questions { get; set; }
     //public virtual AlreadyAnswerd AlreadyAnswerd { get; set; }
 

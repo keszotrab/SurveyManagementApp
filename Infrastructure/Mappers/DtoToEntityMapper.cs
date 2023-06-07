@@ -1,11 +1,13 @@
 ﻿using Infrastructure.EF.Entities;
 using System.Threading.Channels;
-using WebAPI.Dto;
+using Infrastructure;
 
-namespace WebAPI.Mappers
+
+namespace Infrastructure.Mappers
 {
     public class DtoToEntityMapper
     {
+        /*
         public static ClosedUserAnswersEntity FromDtoToClosedUserAnswer(ClosedUserAnswersDto dto)
         {
             return new ClosedUserAnswersEntity()
@@ -27,5 +29,6 @@ namespace WebAPI.Mappers
                 Email = dto.Email
             };
         }
+        */
     }
 }

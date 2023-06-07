@@ -15,8 +15,6 @@ namespace Infrastructure.EF.Entities
         [ForeignKey("SurveyId")]
         public SurveysEntity Surveys { get; set; }
 
-
-
         public string Domain_Name { get; init; }
 
     }

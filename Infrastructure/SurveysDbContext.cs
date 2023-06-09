@@ -33,7 +33,7 @@ namespace Infrastructure
         {
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseSqlServer(
-                "DATA SOURCE=BARTEK-KOMPUTER\\SQLEXPRESS;DATABASE=SurveysDbA1;Integrated Security=true;TrustServerCertificate=True");
+                "DATA SOURCE=MAREK\\SQLEXPRESS;DATABASE=SurveysDb2;Integrated Security=true;TrustServerCertificate=True");
         }
 
 

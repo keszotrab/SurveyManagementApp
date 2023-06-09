@@ -48,6 +48,9 @@ void ConfigureServices(IServiceCollection services) => services.AddDbContext<Sur
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddScoped<IUserRoleService, UserRoleService>();
+
+
 builder.Services.AddSingleton<JwtSettings>();
 builder.Services.ConfigureIdentity();
 builder.Services.ConfigureJWT(new JwtSettings(builder.Configuration));

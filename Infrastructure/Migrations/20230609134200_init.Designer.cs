@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(SurveysDbContext))]
-    [Migration("20230607084305_Initial")]
-    partial class Initial
+    [Migration("20230609134200_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -390,7 +390,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "74086215-a773-4465-a707-5280cf10da66",
+                            ConcurrencyStamp = "9c7c333c-265d-448b-8e85-1bcb61f35084",
                             Email = "admin@admin.adm",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -404,7 +404,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9eb30ecf-e4cc-4d05-80b4-bd39940f3641",
+                            ConcurrencyStamp = "880d4671-0481-4d56-97fd-00b230e8c672",
                             Email = "client@client.cli",
                             EmailConfirmed = false,
                             LockoutEnabled = false,

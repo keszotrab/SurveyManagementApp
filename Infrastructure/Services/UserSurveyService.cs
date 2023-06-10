@@ -18,6 +18,7 @@ namespace Infrastructure.Services
         public UserSurveyService()
         {
             _dbContext = new SurveysDbContext();
+
         }
 
         public string ReturnFirstSurveyName()

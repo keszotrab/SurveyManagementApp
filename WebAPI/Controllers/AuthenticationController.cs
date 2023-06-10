@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using WebAPI.Configuration;
 using WebAPI.Dto;
 using WebAPI;
+using System.Security.Claims;
 
 namespace WebAPI.Controllers
 {
@@ -20,6 +21,8 @@ namespace WebAPI.Controllers
     {
         private readonly UserManager<UsersEntity> _manager;
         private readonly JwtSettings _jwtSettings;
+        
+
 
 
 
@@ -83,6 +86,8 @@ namespace WebAPI.Controllers
                 .AddClaim(JwtRegisteredClaimNames.Email, user.Email)
                 .AddClaim(JwtRegisteredClaimNames.Exp, DateTimeOffset.UtcNow.AddMinutes(5).ToUnixTimeSeconds())
                 .AddClaim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                .AddClaim(ClaimTypes.NameIdentifier, user.Id)
+                .AddClaim(ClaimTypes.Role, _manager.GetRolesAsync(user).Result)
                 .Audience(_jwtSettings.Audience)
                 .Issuer(_jwtSettings.Issuer)
                 .Encode();
@@ -91,7 +96,7 @@ namespace WebAPI.Controllers
 
 
         [HttpPost("register/admin")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> RegisterAdmin(UserRegisterDto userDto)
         {
             var user = Mappers.UsersMapper.FromDtoToUserEntity(userDto);

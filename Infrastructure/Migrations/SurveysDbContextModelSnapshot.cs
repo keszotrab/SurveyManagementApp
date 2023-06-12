@@ -387,13 +387,16 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9c7c333c-265d-448b-8e85-1bcb61f35084",
+                            ConcurrencyStamp = "289fabdd-217e-4b32-9f82-89141a8dbe8e",
                             Email = "admin@admin.adm",
                             EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            PasswordHash = "Admin123@",
+                            LockoutEnabled = true,
+                            NormalizedEmail = "ADMIN@ADMIN.ADM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKvaeI3lvfyylyInvE+kxkpd7uJN9s9rDSIVdCdW3Rr+QivyYIk11wj5P2Jv8ilipQ==",
                             PhoneNumberConfirmed = false,
-                            Salt = "3KmnGpckunC7RrOt/lRQYg==",
+                            Salt = "",
+                            SecurityStamp = "ZKCI42LTZFFSVWZXVFP3ZFF3A5KU7ULM",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
@@ -401,15 +404,18 @@ namespace Infrastructure.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "880d4671-0481-4d56-97fd-00b230e8c672",
-                            Email = "client@client.cli",
+                            ConcurrencyStamp = "289fabdd-217e-4b32-9f82-89141a8dbe8e",
+                            Email = "user@wp.pl",
                             EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            PasswordHash = "RK9wNvXKYruqOaVsZ38Uew==",
+                            LockoutEnabled = true,
+                            NormalizedEmail = "USER@WP.PL",
+                            NormalizedUserName = "USER",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKvaeI3lvfyylyInvE+kxkpd7uJN9s9rDSIVdCdW3Rr+QivyYIk11wj5P2Jv8ilipQ==",
                             PhoneNumberConfirmed = false,
-                            Salt = "06AA267858EA0A0E227984B83434FEE818F4CB622D13051FF07229279E281EB5",
+                            Salt = "",
+                            SecurityStamp = "ZKCI42LTZFFSVWZXVFP3ZFF3A5KU7ULM",
                             TwoFactorEnabled = false,
-                            UserName = "client"
+                            UserName = "user"
                         });
                 });
 
@@ -501,6 +507,11 @@ namespace Infrastructure.Migrations
                         {
                             UserId = 1,
                             RoleId = 2
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            RoleId = 1
                         });
                 });
 

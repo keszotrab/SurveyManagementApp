@@ -33,7 +33,7 @@ namespace Infrastructure
         {
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseSqlServer(
-                "DATA SOURCE=MAREK\\SQLEXPRESS;DATABASE=SurveysDb2;Integrated Security=true;TrustServerCertificate=True");
+                "DATA SOURCE=MAREK\\SQLEXPRESS;DATABASE=SurveysDb;Integrated Security=true;TrustServerCertificate=True");
         }
 
 
@@ -59,7 +59,13 @@ namespace Infrastructure
             {
                 RoleId = 2,
                 UserId = 1
-            });
+            },
+            new IdentityUserRole<int>
+            {
+                RoleId=1,
+                UserId = 2
+            }
+            );
 
             modelBuilder.Entity<ClosedUserAnswersEntity>()
             .HasOne(s => s.User)
@@ -103,29 +109,40 @@ namespace Infrastructure
                 new UsersEntity()
                 {
                     Id = 1,
+                    Salt = "",
                     UserName = "admin",
+                    NormalizedUserName = "ADMIN",
                     Email = "admin@admin.adm",
-                    PasswordHash = "Admin123@",
-                    Salt = "3KmnGpckunC7RrOt/lRQYg==",
+                    NormalizedEmail="ADMIN@ADMIN.ADM",
+                    PasswordHash = "AQAAAAIAAYagAAAAEKvaeI3lvfyylyInvE+kxkpd7uJN9s9rDSIVdCdW3Rr+QivyYIk11wj5P2Jv8ilipQ==",
+                    SecurityStamp= "ZKCI42LTZFFSVWZXVFP3ZFF3A5KU7ULM",
+                    ConcurrencyStamp= "289fabdd-217e-4b32-9f82-89141a8dbe8e",
                     EmailConfirmed = false,
                     PhoneNumberConfirmed = false,
                     TwoFactorEnabled = false,
-                    LockoutEnabled = false,
+                    LockoutEnabled = true,
                     AccessFailedCount = 0
                 },
                 new UsersEntity()
                 {
                     Id = 2,
-                    UserName = "client",
-                    Email = "client@client.cli",
-                    PasswordHash = "RK9wNvXKYruqOaVsZ38Uew==",
-                    Salt = "06AA267858EA0A0E227984B83434FEE818F4CB622D13051FF07229279E281EB5",
+                    Salt = "",
+                    UserName = "user",
+                    NormalizedUserName = "USER",
+                    Email = "user@wp.pl",
+                    NormalizedEmail = "USER@WP.PL",
+                    PasswordHash = "AQAAAAIAAYagAAAAEKvaeI3lvfyylyInvE+kxkpd7uJN9s9rDSIVdCdW3Rr+QivyYIk11wj5P2Jv8ilipQ==",
+                    SecurityStamp = "ZKCI42LTZFFSVWZXVFP3ZFF3A5KU7ULM",
+                    ConcurrencyStamp = "289fabdd-217e-4b32-9f82-89141a8dbe8e",
                     EmailConfirmed = false,
                     PhoneNumberConfirmed = false,
                     TwoFactorEnabled = false,
-                    LockoutEnabled = false,
+                    LockoutEnabled = true,
                     AccessFailedCount = 0
                 }
+
+
+
                 );
 
             modelBuilder.Entity<SurveysEntity>()

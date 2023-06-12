@@ -22,17 +22,11 @@ namespace WebAPI.Controllers
         private readonly UserManager<UsersEntity> _manager;
         private readonly JwtSettings _jwtSettings;
         
-
-
-
-
         public AuthenticationController(UserManager<UsersEntity> manager, JwtSettings jwtSettings)
         {
             _manager = manager;
             _jwtSettings = jwtSettings;
         }
-
-
 
         [HttpPost("login")]
         [AllowAnonymous]
@@ -53,8 +47,6 @@ namespace WebAPI.Controllers
             return Ok(new { Token = token });
         }
 
-
-
         [HttpPost("register/user")]
         [AllowAnonymous]
         public async Task<IActionResult> Register(UserRegisterDto userDto)
@@ -73,7 +65,22 @@ namespace WebAPI.Controllers
             return Ok();
         }
 
+        [HttpPost("register/admin")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> RegisterAdmin(UserRegisterDto userDto)
+        {
+            var user = Mappers.UsersMapper.FromDtoToUserEntity(userDto);
 
+            var result = await _manager.CreateAsync(user, userDto.Password);
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
+
+            await _manager.AddToRoleAsync(user, "Admin");
+
+            return Ok();
+        }
 
         private string CreateToken(UsersEntity user)
         {
@@ -92,30 +99,5 @@ namespace WebAPI.Controllers
                 .Issuer(_jwtSettings.Issuer)
                 .Encode();
         }
-
-
-
-        [HttpPost("register/admin")]
-        [Authorize(Roles = "User")]
-        public async Task<IActionResult> RegisterAdmin(UserRegisterDto userDto)
-        {
-            var user = Mappers.UsersMapper.FromDtoToUserEntity(userDto);
-
-            var result = await _manager.CreateAsync(user, userDto.Password);
-            if (!result.Succeeded)
-            {
-                return BadRequest(result.Errors);
-            }
-
-            await _manager.AddToRoleAsync(user, "Admin");
-
-            return Ok();
-        }
-
-
-
-
-
-
     }
 }

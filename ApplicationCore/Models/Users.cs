@@ -15,7 +15,7 @@ public class Users
     public int Id { get; set; }
     public string Username { get; init; }
     public string Password { get; init; }
-    public string Role { get; init; }
+    public string? Role { get; init; }
     public string Email { get; init; }
 
     public Users(int id, string username, string password, string role, string email)

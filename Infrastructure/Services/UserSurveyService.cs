@@ -8,6 +8,7 @@ using Infrastructure.EF.Entities;
 using Infrastructure.Mappers;
 using Microsoft.EntityFrameworkCore;
 using ApplicationCore.Interfaces;
+using Microsoft.AspNetCore.Identity;
 
 namespace Infrastructure.Services
 {
@@ -28,6 +29,75 @@ namespace Infrastructure.Services
         }
 
 
+        public Answers FindAnswerById(int answerId)
+        {
+            return SurveyMapper.FromEntityToAnswers(_dbContext.Answers.Find(answerId));
+        }
+
+        public Questions FindQuestionById(int questionId)
+        {
+            var entity = _dbContext
+                .Questions
+                .AsNoTracking()
+                .Include(q => q.Answers)
+                .FirstOrDefault(e=> e.Id == questionId);
+
+
+            return SurveyMapper.FromEntityToQuestions(entity);
+        }
+
+
+        public Surveys FindSurveyById(int surveyId)
+        {
+            var entity = _dbContext
+                .Surveys
+                .AsNoTracking()
+                .Include(q => q.Questions)
+                .ThenInclude(q => q.Answers)
+                .Include(q => q.Checks)
+                .Include(q => q.User)
+                .FirstOrDefault(e => e.Id == surveyId);
+
+
+            return SurveyMapper.FromEntityToSurveys(entity);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -38,7 +108,7 @@ namespace Infrastructure.Services
                 .AsNoTracking()
                 .Include(q => q.Questions)
                 .ThenInclude(i => i.Answers)
-                .Select(SurveyMapper.FromEntityToSurvey)
+                .Select(SurveyMapper.FromEntityToSurveys)
                 .ToList();
         }
 

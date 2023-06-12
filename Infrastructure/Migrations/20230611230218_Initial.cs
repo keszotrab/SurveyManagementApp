@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -341,8 +341,8 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Salt", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { 1, 0, "9c7c333c-265d-448b-8e85-1bcb61f35084", "admin@admin.adm", false, false, null, null, null, "Admin123@", null, false, "3KmnGpckunC7RrOt/lRQYg==", null, false, "admin" },
-                    { 2, 0, "880d4671-0481-4d56-97fd-00b230e8c672", "client@client.cli", false, false, null, null, null, "RK9wNvXKYruqOaVsZ38Uew==", null, false, "06AA267858EA0A0E227984B83434FEE818F4CB622D13051FF07229279E281EB5", null, false, "client" }
+                    { 1, 0, "b3c5eed8-90c0-4914-9c9c-caa23c093333", "admin@admin.adm", false, false, null, null, null, "Admin123@", null, false, "3KmnGpckunC7RrOt/lRQYg==", null, false, "admin" },
+                    { 2, 0, "5745ceba-66c9-409c-83c1-2af3b91948fe", "client@client.cli", false, false, null, null, null, "RK9wNvXKYruqOaVsZ38Uew==", null, false, "06AA267858EA0A0E227984B83434FEE818F4CB622D13051FF07229279E281EB5", null, false, "client" }
                 });
 
             migrationBuilder.InsertData(

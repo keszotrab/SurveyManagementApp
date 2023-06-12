@@ -13,6 +13,9 @@ namespace ApplicationCore.Interfaces
         public bool SaveClosedAnswer(int answerId, int userId, string email);
         public bool SaveOpenAnswer(int answerId, int userId, string email, string answerText);
         public string ReturnFirstSurveyName();
+        public Answers FindAnswerById(int answerId);
+        public Questions FindQuestionById(int questionId);
+        public Surveys FindSurveyById(int surveyId);
 
     }
 }

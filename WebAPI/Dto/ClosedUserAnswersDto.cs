@@ -8,6 +8,9 @@ namespace WebAPI.Dto
         public int AnswerId { get; set; }
         public int UserId { get; set; }
         public string Email { get; set; }
+
+
+
         //public List<QuizItemDto> Items { get; set; }
 
         /*

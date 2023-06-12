@@ -16,9 +16,9 @@ namespace WebAPI.Dto
         public string Type { get; set; } 
         public int AuthorId { get; set; }
 
-        //public List<QuestionsDto> ?questionsDtos { get; set; }
-        
-        
+        public List<QuestionsDto> QuestionsDtos { get; set; }
+        public List<DomainChecksDto> DomainChecksDtos { get; set; }
+
         public static SurveyDto of(Surveys survey) 
         {
             if (survey is null)
@@ -31,7 +31,9 @@ namespace WebAPI.Dto
                     Id = survey.Id,
                     Name = survey.Name,
                     Type = survey.Type,
-                    AuthorId = survey.Author.Id
+                    AuthorId = survey.Author.Id,
+                    QuestionsDtos = survey.Questions.Select(QuestionsDto.of).ToList(),
+                    DomainChecksDtos = survey.Checks.Select(DomainChecksDto.of).ToList(),
 
                 };
         }

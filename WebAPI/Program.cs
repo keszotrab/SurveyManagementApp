@@ -18,8 +18,8 @@ builder.Services.AddControllers();
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-//builder.Services.AddDbContext<SurveysDbContext>();
-//builder.Services.AddTransient<IUserSurveyService, UserSurveyService>();
+builder.Services.AddDbContext<SurveysDbContext>();
+builder.Services.AddTransient<IUserSurveyService, UserSurveyService>();
 
 
 

@@ -16,35 +16,73 @@ namespace WebAPI.Controllers
     [ApiController]
     public class SurveyController : ControllerBase
     {
-        //private readonly IUserSurveyService _surveyService;
+        private readonly IUserSurveyService _surveyService;
         private readonly SurveysDbContext _dbContext;
 
-        public SurveyController(//IUserSurveyService surveyService
+        public SurveyController(IUserSurveyService surveyService
             ) {
 
             _dbContext = new SurveysDbContext();
-            //_surveyService = surveyService;
+            _surveyService = surveyService;
 
         }
+
+
+        [Route("api/FirstSurveyName")]
+        [HttpGet]
+        public string FirstSurveyName()
+        {
+            return _dbContext.Surveys.First().Name;
+        }
+        
+
+        [Route("api/FindAnswerById")]
+        [HttpGet]
+        public AnswersDto FindAnswerById(int answerId)
+        {
+            return AnswersDto.of(_surveyService.FindAnswerById(answerId));
+        }
+
+        [Route("api/FindSurveyById")]
+        [HttpGet]
+        public SurveyDto FindSurveyById(int surveyId)
+        {
+            return SurveyDto.of(_surveyService.FindSurveyById(surveyId));
+        }
+
+
+
+        [Route("api/FindQuestionById")]
+        [HttpGet]
+        public QuestionsDto FindQuestionById(int questionId)
+        {
+            return QuestionsDto.of(_surveyService.FindQuestionById(questionId));
+        }
+
+
+
+
+
+
+
+
+
+
+
+
         /*
+         * 
         [AllowAnonymous]
         [Route("api/ShowAllSurveys")]
         [HttpGet]
         public IEnumerable<SurveyDto> FindAllSurveys()
         {
-            List<string> random = new List<string>();
-            random.Add("jeden");
-            random.Add("dwa");
 
             return _surveyService.FindAllSurveys().Select(SurveyDto.of).AsEnumerable();
         }
         */
-        [Route("api/FirstSurveyName")]
-        [HttpGet]
-        public string FirstSurveyName()
-        { 
-            return _dbContext.Surveys.First().Name;
-        }
+
+
 
 
 

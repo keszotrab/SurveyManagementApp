@@ -13,13 +13,14 @@ namespace WebAPI.Dto
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Type { get; set; } 
+        public string Type { get; set; }
         public int AuthorId { get; set; }
+        public bool IsFilled { get; set; } = false;
 
         public List<QuestionsDto> QuestionsDtos { get; set; }
         public List<DomainChecksDto> DomainChecksDtos { get; set; }
 
-        public static SurveyDto of(Surveys survey) 
+        public static SurveyDto? of(Surveys survey)
         {
             if (survey is null)
             {
@@ -32,8 +33,9 @@ namespace WebAPI.Dto
                     Name = survey.Name,
                     Type = survey.Type,
                     AuthorId = survey.Author.Id,
-                    QuestionsDtos = survey.Questions.Select(QuestionsDto.of).ToList(),
-                    DomainChecksDtos = survey.Checks.Select(DomainChecksDto.of).ToList(),
+                    IsFilled = survey.IsFilled,
+                    QuestionsDtos = survey.Questions is null ? null : survey.Questions.Select(QuestionsDto.of).ToList(),
+                    DomainChecksDtos = survey.Checks is null ? null : survey.Checks.Select(DomainChecksDto.of).ToList(),
 
                 };
         }

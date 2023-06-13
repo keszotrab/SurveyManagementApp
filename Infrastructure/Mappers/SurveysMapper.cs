@@ -38,18 +38,19 @@ namespace Infrastructure.Mappers
             return new Surveys(
                 id: entity.Id,
                 name: entity.Name,
-                author: FromEntityToUsers(entity.User),
+                author: entity.User is null ? null : FromEntityToUsers(entity.User),
                 type: entity.Type,
-                checks: entity.Checks.Select(FromEntityToDomainChecks).ToList(), 
-                questions: entity.Questions.Select(FromEntityToQuestions).ToList() 
+                isFilled: entity.IsFilled,
+                checks: entity.Checks is null ? null : entity.Checks.Select(FromEntityToDomainChecks).ToList(), 
+                questions: entity.Questions is null ? null : entity.Questions.Select(FromEntityToQuestions).ToList() 
                 );
         }
 
 
 
-        public static Users FromEntityToUsers(UsersEntity entity)
+        public static Users? FromEntityToUsers(UsersEntity entity)
         {
-            return new Users(
+            return entity is null ? null : new Users(
 
                 id: entity.Id,
                 username: entity.UserName,
@@ -64,19 +65,34 @@ namespace Infrastructure.Mappers
         {
 
             return new DomainCheck(
-
                 id: entity.Id,
                 domain_Name: entity.Domain_Name,
                 surveyId: entity.SurveyId
                 );
-
-
-
         }
 
+        public static ClosedUserAnswers FromEntityToClosedUserAnswers(ClosedUserAnswersEntity entity)
+        {
 
+            return new ClosedUserAnswers(
+                id: entity.Id,
+                user: entity.User is null ? null : FromEntityToUsers(entity.User),
+                answer: null, //FromEntityToAnswers(entity.Answer),
+                email: entity.Email is null ? null : entity.Email
+                );
+        }
 
+        public static OpenUserAnswers FromEntityToOpenUserAnswers(OpenUserAnswersEntity entity)
+        {
 
+            return new OpenUserAnswers(
+                id: entity.Id,
+                user: entity.User is null ? null : FromEntityToUsers(entity.User),
+                answer: null, //FromEntityToAnswers(entity.Answer),
+                answerText: entity.AnswerText,
+                email: entity.Email is null ? null : entity.Email
+                );
+        }
 
 
 

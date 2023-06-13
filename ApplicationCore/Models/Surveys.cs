@@ -16,16 +16,18 @@ public class Surveys
     public string Name { get; set; }
     public Users Author { get; set; } //od razu można przypisać autora
     public string Type { get; set; } //public, private, domain. Mozna tu walnąć enuma teorytycznie
+    public bool IsFilled { get; set; } = false;
 
     public List<DomainCheck> Checks { get; set; } //domeny które mogą odpowiadać na tą ankiete
     public List<Questions> Questions { get; set; } //lista wszystkich pytań tej ankiety
 
-    public Surveys(int id, string name, Users author, string type, List<DomainCheck> checks, List<Questions> questions)
+    public Surveys(int id, string name, Users author, string type, bool isFilled, List<DomainCheck> checks, List<Questions> questions)
     {
         Id = id;
         Name = name;
         Author = author;
         Type = type;
+        IsFilled = isFilled;
         Checks = checks;
         Questions = questions;
     }

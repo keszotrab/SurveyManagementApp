@@ -8,13 +8,13 @@ namespace Infrastructure.EF.Entities
 
         public int? UserId { get; set; }
         [ForeignKey("UserId")]
-        public UsersEntity User { get; set; }
+        public UsersEntity? User { get; set; }
 
 
         public int AnswerId { get; set; }
         [ForeignKey("AnswerId")]
         public AnswersEntity Answer { get; set; }
 
-        public string Email { get; set; }
+        public string? Email { get; set; }
     }
 }

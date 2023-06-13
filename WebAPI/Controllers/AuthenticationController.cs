@@ -84,7 +84,7 @@ namespace WebAPI.Controllers
                 .AddClaim(JwtRegisteredClaimNames.Gender, "male")
                 .AddClaim(JwtRegisteredClaimNames.NameId, user.Id.ToString())
                 .AddClaim(JwtRegisteredClaimNames.Email, user.Email)
-                .AddClaim(JwtRegisteredClaimNames.Exp, DateTimeOffset.UtcNow.AddMinutes(5).ToUnixTimeSeconds())
+                .AddClaim(JwtRegisteredClaimNames.Exp, DateTimeOffset.UtcNow.AddMinutes(120).ToUnixTimeSeconds())
                 .AddClaim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                 .AddClaim(ClaimTypes.NameIdentifier, user.Id)
                 .AddClaim(ClaimTypes.Role, _manager.GetRolesAsync(user).Result)

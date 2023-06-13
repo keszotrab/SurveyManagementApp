@@ -1,33 +1,34 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ApplicationCore.Models;
+using Microsoft.VisualStudio.Services.Users;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebAPI.Dto
 {
     public class ClosedUserAnswersDto
     {
         public int Id { get; set; }
-        public int AnswerId { get; set; }
-        public int UserId { get; set; }
-        public string Email { get; set; }
+        public int? AnswerId { get; set; }
+        public int? UserId { get; set; }
+        public string? Email { get; set; }
 
-
-
-        //public List<QuizItemDto> Items { get; set; }
-
-        /*
-        public static QuizDto of(Quiz quiz)
+        public static ClosedUserAnswersDto? of(ClosedUserAnswers answer)
         {
-            if (quiz is null)
+            if (answer is null)
             {
                 return null;
             }
-            return new QuizDto()
-            {
-                Id = quiz.Id,
-                Title = quiz.Title,
-                Items = quiz.Items.Select(QuizItemDto.of).ToList()
-            };
+            else
+                return new ClosedUserAnswersDto()
+                {
+                    Id = answer.Id,
+                    AnswerId = null, //answer.Answer.Id,
+                    UserId = answer.User is null ? null : answer.User.Id,
+                    Email = answer.Email is null ? null : answer.Email,
+
+
+
+                };
         }
-        */
 
     }
 }

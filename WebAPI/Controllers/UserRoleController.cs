@@ -1,5 +1,6 @@
 ﻿using ApplicationCore.Interfaces;
 using ApplicationCore.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using WebAPI.Dto;
@@ -8,11 +9,12 @@ namespace WebAPI.Controllers
 {
     [ApiController]
     [Route("api/users")]
-    public class UserController : ControllerBase
+    [Authorize(Roles = "Admin")]
+    public class UserRoleController : ControllerBase
     {
         private readonly IUserRoleService _userRoleService;
 
-        public UserController(IUserRoleService userRoleService)
+        public UserRoleController(IUserRoleService userRoleService)
         {
             _userRoleService = userRoleService;
         }
@@ -37,7 +39,6 @@ namespace WebAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
 
         [HttpDelete("{id}/roles")]
         public IActionResult DeleteUserRole(int id)

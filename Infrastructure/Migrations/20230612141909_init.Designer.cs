@@ -4,6 +4,7 @@ using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(SurveysDbContext))]
-    partial class SurveysDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230612141909_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -120,6 +123,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("UserId")
@@ -171,7 +175,11 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("AnswersId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("UserId")
@@ -179,7 +187,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AnswerId");
+                    b.HasIndex("AnswersId");
 
                     b.HasIndex("UserId");
 
@@ -233,9 +241,6 @@ namespace Infrastructure.Migrations
                     b.Property<int>("AuthorId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsFilled")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -244,9 +249,14 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("UsersEntityId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
+
+                    b.HasIndex("UsersEntityId");
 
                     b.ToTable("Surveys");
 
@@ -255,9 +265,8 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             AuthorId = 1,
-                            IsFilled = false,
                             Name = "testSurvey",
-                            Type = "Public"
+                            Type = "public"
                         });
                 });
 
@@ -381,10 +390,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-
                             ConcurrencyStamp = "289fabdd-217e-4b32-9f82-89141a8dbe8e",
-
-
                             Email = "admin@admin.adm",
                             EmailConfirmed = false,
                             LockoutEnabled = true,
@@ -403,7 +409,6 @@ namespace Infrastructure.Migrations
                             AccessFailedCount = 0,
                             ConcurrencyStamp = "289fabdd-217e-4b32-9f82-89141a8dbe8e",
                             Email = "user@wp.pl",
-
                             EmailConfirmed = false,
                             LockoutEnabled = true,
                             NormalizedEmail = "USER@WP.PL",
@@ -592,9 +597,9 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Infrastructure.EF.Entities.OpenUserAnswersEntity", b =>
                 {
-                    b.HasOne("Infrastructure.EF.Entities.AnswersEntity", "Answer")
+                    b.HasOne("Infrastructure.EF.Entities.AnswersEntity", "Answers")
                         .WithMany("OpenUserAnswers")
-                        .HasForeignKey("AnswerId")
+                        .HasForeignKey("AnswersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -603,7 +608,7 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.Navigation("Answer");
+                    b.Navigation("Answers");
 
                     b.Navigation("User");
                 });
@@ -625,6 +630,10 @@ namespace Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("Infrastructure.EF.Entities.UsersEntity", null)
+                        .WithMany("Surveys")
+                        .HasForeignKey("UsersEntityId");
 
                     b.Navigation("User");
                 });
@@ -699,6 +708,11 @@ namespace Infrastructure.Migrations
                     b.Navigation("Checks");
 
                     b.Navigation("Questions");
+                });
+
+            modelBuilder.Entity("Infrastructure.EF.Entities.UsersEntity", b =>
+                {
+                    b.Navigation("Surveys");
                 });
 #pragma warning restore 612, 618
         }

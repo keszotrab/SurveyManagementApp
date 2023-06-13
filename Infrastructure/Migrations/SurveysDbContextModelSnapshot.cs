@@ -120,7 +120,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("UserId")
@@ -172,11 +171,7 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("AnswersId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("UserId")
@@ -184,7 +179,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AnswersId");
+                    b.HasIndex("AnswerId");
 
                     b.HasIndex("UserId");
 
@@ -238,6 +233,9 @@ namespace Infrastructure.Migrations
                     b.Property<int>("AuthorId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsFilled")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -246,14 +244,9 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UsersEntityId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
-
-                    b.HasIndex("UsersEntityId");
 
                     b.ToTable("Surveys");
 
@@ -262,8 +255,9 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             AuthorId = 1,
+                            IsFilled = false,
                             Name = "testSurvey",
-                            Type = "public"
+                            Type = "Public"
                         });
                 });
 
@@ -387,7 +381,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9c7c333c-265d-448b-8e85-1bcb61f35084",
+                            ConcurrencyStamp = "93e22e2e-0249-4f46-87ee-ebda5796d4c7",
                             Email = "admin@admin.adm",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -401,7 +395,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "880d4671-0481-4d56-97fd-00b230e8c672",
+                            ConcurrencyStamp = "8679295b-0ed6-41d5-9fe7-9293c0fb83a5",
                             Email = "client@client.cli",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -583,9 +577,9 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Infrastructure.EF.Entities.OpenUserAnswersEntity", b =>
                 {
-                    b.HasOne("Infrastructure.EF.Entities.AnswersEntity", "Answers")
+                    b.HasOne("Infrastructure.EF.Entities.AnswersEntity", "Answer")
                         .WithMany("OpenUserAnswers")
-                        .HasForeignKey("AnswersId")
+                        .HasForeignKey("AnswerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -594,7 +588,7 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.Navigation("Answers");
+                    b.Navigation("Answer");
 
                     b.Navigation("User");
                 });
@@ -616,10 +610,6 @@ namespace Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("Infrastructure.EF.Entities.UsersEntity", null)
-                        .WithMany("Surveys")
-                        .HasForeignKey("UsersEntityId");
 
                     b.Navigation("User");
                 });
@@ -694,11 +684,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Checks");
 
                     b.Navigation("Questions");
-                });
-
-            modelBuilder.Entity("Infrastructure.EF.Entities.UsersEntity", b =>
-                {
-                    b.Navigation("Surveys");
                 });
 #pragma warning restore 612, 618
         }

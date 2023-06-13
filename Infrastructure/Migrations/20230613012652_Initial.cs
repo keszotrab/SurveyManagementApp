@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -169,8 +169,8 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AuthorId = table.Column<int>(type: "int", nullable: false),
-                    UsersEntityId = table.Column<int>(type: "int", nullable: true)
+                    IsFilled = table.Column<bool>(type: "bit", nullable: false),
+                    AuthorId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -178,11 +178,6 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_Surveys_AspNetUsers_AuthorId",
                         column: x => x.AuthorId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Surveys_AspNetUsers_UsersEntityId",
-                        column: x => x.UsersEntityId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                 });
@@ -281,7 +276,7 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: true),
                     AnswerId = table.Column<int>(type: "int", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -307,16 +302,15 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: true),
                     AnswerId = table.Column<int>(type: "int", nullable: false),
-                    AnswersId = table.Column<int>(type: "int", nullable: false),
                     AnswerText = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OpenUserAnswers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OpenUserAnswers_Answers_AnswersId",
-                        column: x => x.AnswersId,
+                        name: "FK_OpenUserAnswers_Answers_AnswerId",
+                        column: x => x.AnswerId,
                         principalTable: "Answers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -341,8 +335,8 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Salt", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { 1, 0, "9c7c333c-265d-448b-8e85-1bcb61f35084", "admin@admin.adm", false, false, null, null, null, "Admin123@", null, false, "3KmnGpckunC7RrOt/lRQYg==", null, false, "admin" },
-                    { 2, 0, "880d4671-0481-4d56-97fd-00b230e8c672", "client@client.cli", false, false, null, null, null, "RK9wNvXKYruqOaVsZ38Uew==", null, false, "06AA267858EA0A0E227984B83434FEE818F4CB622D13051FF07229279E281EB5", null, false, "client" }
+                    { 1, 0, "93e22e2e-0249-4f46-87ee-ebda5796d4c7", "admin@admin.adm", false, false, null, null, null, "Admin123@", null, false, "3KmnGpckunC7RrOt/lRQYg==", null, false, "admin" },
+                    { 2, 0, "8679295b-0ed6-41d5-9fe7-9293c0fb83a5", "client@client.cli", false, false, null, null, null, "RK9wNvXKYruqOaVsZ38Uew==", null, false, "06AA267858EA0A0E227984B83434FEE818F4CB622D13051FF07229279E281EB5", null, false, "client" }
                 });
 
             migrationBuilder.InsertData(
@@ -352,8 +346,8 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Surveys",
-                columns: new[] { "Id", "AuthorId", "Name", "Type", "UsersEntityId" },
-                values: new object[] { 1, 1, "testSurvey", "public", null });
+                columns: new[] { "Id", "AuthorId", "IsFilled", "Name", "Type" },
+                values: new object[] { 1, 1, false, "testSurvey", "Public" });
 
             migrationBuilder.InsertData(
                 table: "Questions",
@@ -446,9 +440,9 @@ namespace Infrastructure.Migrations
                 column: "SurveyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OpenUserAnswers_AnswersId",
+                name: "IX_OpenUserAnswers_AnswerId",
                 table: "OpenUserAnswers",
-                column: "AnswersId");
+                column: "AnswerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OpenUserAnswers_UserId",
@@ -464,11 +458,6 @@ namespace Infrastructure.Migrations
                 name: "IX_Surveys_AuthorId",
                 table: "Surveys",
                 column: "AuthorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Surveys_UsersEntityId",
-                table: "Surveys",
-                column: "UsersEntityId");
         }
 
         /// <inheritdoc />

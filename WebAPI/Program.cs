@@ -2,6 +2,7 @@ using ApplicationCore.Interfaces;
 using Infrastructure;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
@@ -18,10 +19,11 @@ builder.Services.AddControllers();
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-//builder.Services.AddDbContext<SurveysDbContext>();
-//builder.Services.AddTransient<IUserSurveyService, UserSurveyService>();
+builder.Services.AddDbContext<SurveysDbContext>();
+builder.Services.AddTransient<IUserSurveyService, UserSurveyService>();
 
-
+//builder.Services.AddHttpContextAccessor();
+//builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
 
 

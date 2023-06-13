@@ -24,3 +24,13 @@
 
 6. Odpalamy projekt klikająć F5 albo bezpośrednio klikająć w kompilator
 
+## Przykładowi użytkownicy:
+
+* User:
+  * Username: user
+  * Hasło: Ciastko123#   
+  
+* Admin:
+  * Username: admin
+  * Hasło: Ciastko123#   
+

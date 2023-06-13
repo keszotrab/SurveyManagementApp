@@ -33,7 +33,10 @@ namespace Infrastructure
         {
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseSqlServer(
+
                 "DATA SOURCE=MAREK\\SQLEXPRESS;DATABASE=SurveysDb;Integrated Security=true;TrustServerCertificate=True");
+
+
         }
 
 
@@ -152,7 +155,8 @@ namespace Infrastructure
                     Id = 1,
                     Name = "testSurvey",
                     AuthorId = 1,
-                    Type = "public"
+                    Type = "Public",
+                    IsFilled = false
                 }
             );
 

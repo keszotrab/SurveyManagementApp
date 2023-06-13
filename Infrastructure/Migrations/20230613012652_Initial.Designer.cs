@@ -4,6 +4,7 @@ using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(SurveysDbContext))]
-    partial class SurveysDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230613012652_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -381,19 +384,13 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-
-                            ConcurrencyStamp = "289fabdd-217e-4b32-9f82-89141a8dbe8e",
-
-
+                            ConcurrencyStamp = "93e22e2e-0249-4f46-87ee-ebda5796d4c7",
                             Email = "admin@admin.adm",
                             EmailConfirmed = false,
-                            LockoutEnabled = true,
-                            NormalizedEmail = "ADMIN@ADMIN.ADM",
-                            NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKvaeI3lvfyylyInvE+kxkpd7uJN9s9rDSIVdCdW3Rr+QivyYIk11wj5P2Jv8ilipQ==",
+                            LockoutEnabled = false,
+                            PasswordHash = "Admin123@",
                             PhoneNumberConfirmed = false,
-                            Salt = "",
-                            SecurityStamp = "ZKCI42LTZFFSVWZXVFP3ZFF3A5KU7ULM",
+                            Salt = "3KmnGpckunC7RrOt/lRQYg==",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
@@ -401,19 +398,15 @@ namespace Infrastructure.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "289fabdd-217e-4b32-9f82-89141a8dbe8e",
-                            Email = "user@wp.pl",
-
+                            ConcurrencyStamp = "8679295b-0ed6-41d5-9fe7-9293c0fb83a5",
+                            Email = "client@client.cli",
                             EmailConfirmed = false,
-                            LockoutEnabled = true,
-                            NormalizedEmail = "USER@WP.PL",
-                            NormalizedUserName = "USER",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKvaeI3lvfyylyInvE+kxkpd7uJN9s9rDSIVdCdW3Rr+QivyYIk11wj5P2Jv8ilipQ==",
+                            LockoutEnabled = false,
+                            PasswordHash = "RK9wNvXKYruqOaVsZ38Uew==",
                             PhoneNumberConfirmed = false,
-                            Salt = "",
-                            SecurityStamp = "ZKCI42LTZFFSVWZXVFP3ZFF3A5KU7ULM",
+                            Salt = "06AA267858EA0A0E227984B83434FEE818F4CB622D13051FF07229279E281EB5",
                             TwoFactorEnabled = false,
-                            UserName = "user"
+                            UserName = "client"
                         });
                 });
 
@@ -505,11 +498,6 @@ namespace Infrastructure.Migrations
                         {
                             UserId = 1,
                             RoleId = 2
-                        },
-                        new
-                        {
-                            UserId = 2,
-                            RoleId = 1
                         });
                 });
 

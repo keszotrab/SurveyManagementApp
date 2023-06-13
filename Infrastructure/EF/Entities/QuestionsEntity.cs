@@ -7,12 +7,14 @@ namespace Infrastructure.EF.Entities
     {
         public int Id { get; set; }
 
-        public int SurveysId { get; init; }
 
+        public int SurveysId { get; init; }
         [ForeignKey("SurveysId")]
         public SurveysEntity Surveys { get; set; }
-
-
+        
+        
+        
+        
         public string Question { get; init; }
 
 
